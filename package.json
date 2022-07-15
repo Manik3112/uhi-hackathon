@@ -1,0 +1,25 @@
+{
+  "name": "uhi-hackathon",
+  "version": "0.0.1",
+  "description": "This project contains the code of the Challenge 3 of innovation sheet of UHI Hackathon by Bajaj Health",
+  "main": "app.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/app",
+    "start:dev": "npm run build && npm run start"
+  },
+  "author": "Manik Rastogi",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/node": "^18.0.4"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  }
+}
