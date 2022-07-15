@@ -13,7 +13,7 @@ export class UhiController {
   }
 
   init = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
-    const response = this.members.uhiService.init();
-    return res.json(response);
+    const response = await this.members.uhiService.init();
+    return res.status(response.status).json(response.data);
   };
 }

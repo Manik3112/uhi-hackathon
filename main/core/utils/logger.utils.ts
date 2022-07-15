@@ -9,4 +9,7 @@ export class Logger {
       console.log(`:= ${Date.now()} =:= ${event} =:= ${JSON.stringify(data)} =:`);
     }
   }
+  error(error: any, event: string = '') {
+    console.error(`:= ${Date.now()} =:= ${event} =:= ${JSON.stringify(error)} =:`);
+  }
 }

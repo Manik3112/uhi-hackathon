@@ -7,3 +7,8 @@ export type ExpressResponse = Response;
 export type ExpressRouter = Router;
 
 export const ExpressRouter = Router;
+
+export type RestResponseType = {
+  status: number,
+  data: Record<string, any>,
+}
