@@ -21,6 +21,6 @@ export class UhiService {
       params: {params: 'yes'},
       method: 'post',
     });
-    return response;
+    return this.restClient.ResponseBuilder(response.status, response.data);
   }
 }

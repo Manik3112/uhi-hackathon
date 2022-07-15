@@ -37,7 +37,7 @@ export class RestClient {
       });
     })
   }
-  private ResponseBuilder(status: number, data: Record<string, any>) {
+  ResponseBuilder(status: number, data: Record<string, any>) {
     return {
       status: status,
       data: data,
