@@ -8,12 +8,18 @@ export class SymptomsController {
     const router = ExpressRouter();
 
     router.post('/suggestions', this.getSuggestions);
+    router.post('/patient/suggestions', this.getPatientSuggestions);
 
     return router;
   }
 
   getSuggestions = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
-    const response = await this.members.symptomsService.getSuggestions();
+    const response = await this.members.symptomsService.getSuggestions(req.body);
+    return res.status(response.status).json(response.data);
+  };
+
+  getPatientSuggestions = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
+    const response = await this.members.symptomsService.getPatientSuggestions(req.body);
     return res.status(response.status).json(response.data);
   };
 }
