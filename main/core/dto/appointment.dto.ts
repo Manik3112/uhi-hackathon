@@ -6,10 +6,12 @@ export type AppointmentDto = {
   patientId: string,
   patient: PatientDto,
   appointmentSource: string,
+  slotTimeInMinutes?: string,
   isFollowUp: string,
   followUpAppointmentId: string,
   emrId: string,
+  scheduleDatetime: string | Date,
+  queueToken: number,
   createdAt?: Date,
   updatedAt?: Date,
-
 }

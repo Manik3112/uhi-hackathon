@@ -20,11 +20,18 @@ export class AppointmentModel {
         patientId: request.patientId,
         appointmentSource: request.appointmentSource,
         isFollowUp: request.isFollowUp,
+        slotTimeInMinutes: request.slotTimeInMinutes,
         followUpAppointmentId: request.followUpAppointmentId,
         emrId: request.emrId,
+        scheduleDatetime: this.commonUtil.getDateObject(request.scheduleDatetime),
         createdAt: this.commonUtil.getCurrentDate(),
         updatedAt: this.commonUtil.getCurrentDate(),
       })
     }
+  }
+  async getAppointment(appointmentId: string): Promise<AppointmentDto> {
+    return this.dbClient.db.findOne({
+      appointmentId,
+    }, {projection: { _id: 0 }});
   }
 }

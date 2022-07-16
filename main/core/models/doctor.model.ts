@@ -20,10 +20,14 @@ export class DoctorModel {
         lastName : 'Rastogi',
         phoneNumber : '8909509598',
         speciality : 'general-physician',
+        slotTimeInMinutes: 30,
         createdAt: this.commonUtil.getCurrentDate(),
         updatedAt: this.commonUtil.getCurrentDate(),
       })
     }
     return doctor.doctorId;
+  }
+  async fetchDoctor(doctorId: string) {
+    return await this.dbClient.db.findOne({doctorId}, {projection: { _id: 0 }});
   }
 }

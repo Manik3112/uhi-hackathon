@@ -1,5 +1,6 @@
 import { CommonUtil } from '../../frame/utils/common.util';
 import { DbClient } from '../../frame/modules/dbClient.module';
+import { EmrDto } from '../dto/emr.dto';
 
 export class EmrModel {
   private dbClient: DbClient;
@@ -14,7 +15,7 @@ export class EmrModel {
     await this.dbClient.db.insertOne({
       emrId,
       symptoms: [],
-      premetiveDiagnosis: [],
+      provisionalDiagnosis: [],
       medication: [],
       investigation: [],
       advice: [],
@@ -24,5 +25,35 @@ export class EmrModel {
       updatedAt: this.commonUtil.getCurrentDate(),
     })
     return emrId;
+  }
+  async getEmr(emrId: string) {
+    return this.dbClient.db.findOne({
+      emrId,
+    }, {projection: { _id: 0 }});
+  }
+  async addEmrPatient(emrId: string, symptoms: string[]) {
+    return this.dbClient.db.updateOne({
+      emrId,
+      symptoms: [],
+    }, {$set: { symptoms }});
+  }
+  async updateEmrReceptionist(emrId: string, provisionalDiagnosis: string[]) {
+    return this.dbClient.db.updateOne({
+      emrId,
+    }, {$set: { provisionalDiagnosis }});
+  }
+  async updateEmrDoctor(emrId: string, request: EmrDto) {
+    return this.dbClient.db.updateOne({
+      emrId,
+    }, {
+      $set: {
+        symptoms: request.symptoms,
+        symptomsDetails: request.symptomsDetails,
+        provisionalDiagnosis: request.provisionalDiagnosis,
+        medication: request.medication,
+        investigation: request.investigation,
+        advice: request.advice,
+      }
+    });
   }
 }

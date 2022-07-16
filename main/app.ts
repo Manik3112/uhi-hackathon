@@ -8,6 +8,8 @@ import { SymptomsService } from './core/services/symptoms.service';
 import { SymptomsController } from './core/controllers/symptoms.controller';
 import { AppointmentService } from './core/services/appointment.service';
 import { AppointmentController } from './core/controllers/appointment.controller';
+import { EmrController } from './core/controllers/emr.controller';
+import { EmrService } from './core/services/emr.service';
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
@@ -20,10 +22,12 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
   // Initializing Services
   const symptomsService = new SymptomsService();
   const appointmentService = new AppointmentService();
+  const emrService = new EmrService();
 
   // Initializing Controllers
   const symptomsController = new SymptomsController({symptomsService});
   const appointmentController = new AppointmentController({appointmentService});
+  const emrController = new EmrController({emrService});
 
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(cors());
@@ -31,6 +35,7 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
   // Routes Controller Here
   app.use('/symptoms', symptomsController.routes());
   app.use('/appointment', appointmentController.routes());
+  app.use('/emr', emrController.routes());
   
   app.use((req, res) => {
     res.status(404).json({ error: `Cannot ${req.method} ${req.url}` });

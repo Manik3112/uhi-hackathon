@@ -1,7 +1,8 @@
 export type EmrDto = {
-  emrId?: string,
+  emrId: string,
   symptoms: string[],
-  premetiveDiagnosis: string[],
+  symptomsDetails: Record<string, Record<string, any>[]>,
+  provisionalDiagnosis: string[],
   medication: string[],
   investigation: string[],
   advice: string[],

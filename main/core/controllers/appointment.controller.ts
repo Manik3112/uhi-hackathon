@@ -8,12 +8,17 @@ export class AppointmentController {
     const router = ExpressRouter();
 
     router.post('/add', this.addAppointment);
+    router.get('/:appointmentId', this.getAppointment);
 
     return router;
   }
 
   addAppointment = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
     const response = await this.members.appointmentService.addAppointment(req.body);
+    return res.status(response.status).json(response.data);
+  };
+  getAppointment = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
+    const response = await this.members.appointmentService.getAppointment(req.params as {appointmentId: string});
     return res.status(response.status).json(response.data);
   };
 }

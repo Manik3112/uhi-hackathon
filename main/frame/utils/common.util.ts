@@ -12,4 +12,7 @@ export class CommonUtil {
   getCurrentDate(): string {
     return moment().format();
   }
+  getDateObject(date: string | Date): string {
+    return moment(date).format();
+  }
 }

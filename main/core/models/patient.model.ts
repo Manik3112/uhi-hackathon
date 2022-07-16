@@ -12,17 +12,28 @@ export class PatientModel {
 
   async insertPatient(request: PatientDto) {
     const patientId = this.commonUtil.getuuidv4();
-    await this.dbClient.db.insertOne({
-      patientId,
+    await this.dbClient.db.updateOne({
+      phoneNumber: request.phoneNumber,
       firstName: request.firstName,
       lastName: request.lastName,
-      phoneNumber: request.phoneNumber,
-      age: request.age,
-      documents: [],
-      medicalHistory: [],
-      createdAt: this.commonUtil.getCurrentDate(),
-      updatedAt: this.commonUtil.getCurrentDate(),
-    })
+    },{
+      $setOnInsert : {
+        patientId,
+        gender: request.gender,
+        age: request.age,
+        documents: [],
+        medicalHistory: [],
+        createdAt: this.commonUtil.getCurrentDate(),
+        updatedAt: this.commonUtil.getCurrentDate(),
+      }
+    },
+    { upsert: true },
+    )
     return patientId;
+  }
+  async fetchPatient(patientId: string) {
+    return await this.dbClient.db.findOne({
+      patientId,
+    }, {projection: { _id: 0 }});
   }
 }
