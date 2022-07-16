@@ -1,7 +1,7 @@
-import { Configuration } from "./../../core/utils/configuration.utils";
-import { Logger } from "./../../core/utils/logger.utils";
+import { Configuration } from "../../core/utils/configuration.utils";
+import { Logger } from "../../core/utils/logger.utils";
 
-const { MongoClient } = require("mongodb");
+import { MongoClient } from "mongodb";
 
 export class DbClient {
   private logger: Logger;

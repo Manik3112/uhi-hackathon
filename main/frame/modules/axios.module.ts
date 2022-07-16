@@ -29,18 +29,18 @@ export class RestClient {
       })
       .then(response => {
         this.logger.log(true, response.data, 'init()');
-        resolve(this.ResponseBuilder(response.status, response.data));
+        resolve(ResponseBuilder(response.status, response.data));
       })
       .catch(error => {
         this.logger.error(error, request.url);
-         resolve(this.ResponseBuilder(400, {error : error.message || 'Something Went Wrong.', code: error.code}));
+         resolve(ResponseBuilder(400, {error : error.message || 'Something Went Wrong.', code: error.code}));
       });
     })
   }
-  ResponseBuilder(status: number, data: Record<string, any>) {
-    return {
-      status: status,
-      data: data,
-    }
+}
+export function ResponseBuilder(status: number, data: Record<string, any>) {
+  return {
+    status: status,
+    data: data,
   }
 }

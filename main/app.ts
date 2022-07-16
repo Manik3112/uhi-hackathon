@@ -4,10 +4,10 @@ import * as express from 'express';
 import * as dotenv from 'dotenv';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
-import { UhiService } from './core/services/uhi.service';
-import { UhiController } from './core/controllers/uhi.controller';
 import { SymptomsService } from './core/services/symptoms.service';
 import { SymptomsController } from './core/controllers/symptoms.controller';
+import { AppointmentService } from './core/services/appointment.service';
+import { AppointmentController } from './core/controllers/appointment.controller';
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
@@ -18,19 +18,19 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
   // Initializing Utils
 
   // Initializing Services
-  const uhiService = new UhiService();
   const symptomsService = new SymptomsService();
+  const appointmentService = new AppointmentService();
 
   // Initializing Controllers
-  const uhiController = new UhiController({uhiService});
   const symptomsController = new SymptomsController({symptomsService});
+  const appointmentController = new AppointmentController({appointmentService});
 
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(cors());
   
   // Routes Controller Here
-  app.use('/uhi', uhiController.routes());
   app.use('/symptoms', symptomsController.routes());
+  app.use('/appointment', appointmentController.routes());
   
   app.use((req, res) => {
     res.status(404).json({ error: `Cannot ${req.method} ${req.url}` });
