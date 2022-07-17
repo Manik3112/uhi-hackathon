@@ -12,7 +12,7 @@ export class PatientModel {
 
   async insertPatient(request: PatientDto) {
     const patientId = this.commonUtil.getuuidv4();
-    await this.dbClient.db.updateOne({
+    const patient = await this.dbClient.db.findOneAndUpdate({
       phoneNumber: request.phoneNumber,
       firstName: request.firstName,
       lastName: request.lastName,
@@ -28,8 +28,8 @@ export class PatientModel {
       }
     },
     { upsert: true },
-    )
-    return patientId;
+    );
+    return patient?.value?.patientId || patientId;
   }
   async fetchPatient(patientId: string) {
     return await this.dbClient.db.findOne({
