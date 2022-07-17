@@ -26,7 +26,7 @@ export class DocumentController {
   };
   getReport = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
     try{
-      const response = await this.members.documentService.getReport(req.params as {patientId: string});
+      const response = await this.members.documentService.getReport(req.query as {patientId: string});
       return res.status(response.status).json(response.data);
     }
     catch(e: any) {
@@ -35,7 +35,7 @@ export class DocumentController {
   };
   getMedical = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
     try{
-      const response = await this.members.documentService.getDocument(req.params as {patientId: string});
+      const response = await this.members.documentService.getDocument(req.query as {patientId: string});
       return res.status(response.status).json(response.data);
     }
     catch(e: any) {

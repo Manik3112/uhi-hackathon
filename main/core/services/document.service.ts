@@ -44,7 +44,8 @@ export class DocumentService {
       request.reportId = await this.reportModel.insertReport({
         patientId: request.patientId,
         documentDate: request.documentDate,
-        report: parsedDocument.reportData,
+        report: parsedDocument.report,
+        base64: parsedDocument.base64,
       });
     }
     const response = await this.model.insertDocument(request);
@@ -53,10 +54,11 @@ export class DocumentService {
   // Mocking THIS API
   private parseDocument(base64: string): any {
     // This Function Will take base64 and convert it into prescription or record on the basis of type matching the closest words.
-    const type = 'record';
+    const type = 'document';
     let prescription, record;
-    if(false) {
+    if(type == 'document') {
       prescription = {
+        type:'document',
         documentDate: '2022-03-01 12:00:00',
         symptoms: ['fever'],
         symptomsDetails: {},
@@ -66,17 +68,21 @@ export class DocumentService {
         advice: [],
         reportData: {},
       };
+      return prescription;
     }
     else if(type == 'record') {
       record = {
+        type: 'record',
         documentDate: '2022-03-01 12:00:00',
         report: {
           bp: '123',
           b12: '100',
-        }
+        },
+        base64: base64
       }
+      return record;
     }
-    return prescription || record;
+    return null;
   }
   async dataPush(request: {abhaAddress: string, fhir: Record<string, any>}) {
     const patient = await this.patientModel.fetchPatientFromAbha(request.abhaAddress);
