@@ -56,4 +56,9 @@ export class EmrModel {
       }
     });
   }
+  async findOne(emrId: string) {
+    return await this.dbClient.db.findOne({
+      emrId: emrId
+    });
+  }
 }

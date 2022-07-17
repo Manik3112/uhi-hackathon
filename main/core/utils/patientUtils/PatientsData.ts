@@ -1,0 +1,68 @@
+const PatientData = [
+  {
+    Specialization: 'General_Physician',
+    Head: ['Headache', 'Muscle aches', 'Loss of appetite', 'Chills and shivering', 'Dehydration'],
+    Bones_and_Joints: ['Osteoporosis', 'Metabolic bone diseases', 'Fracture', 'Stress fracture', 'Bone cancer'],
+    Stomach: ['Abdominal pain and cramps', 'Excess gas', 'Bloating', 'Stomach Pain', 'Diarrhea'],
+    Other: ['Tooth Inflammation', 'Vomit', 'Red eye', 'Pain in upper abdomen', 'Chest tightness'],
+  },
+  {
+    Specialization: 'Pediatrician',
+    Vaccine: ['Pedia vaccine'],
+    Head: ['Fever'],
+    ENT: ['Cold'],
+    Stomach: ['Stomach Pain'],
+    Eye: ['Red eye'],
+    Immune_System: ['Vomit'],
+    Other: [],
+  },
+  {
+    Specialization: 'ENT',
+    Ear: ['Ear Pain'],
+    Nose: ['Cold'],
+    Throat: ['Dry throat'],
+  },
+  {
+    Specialization: 'Dentist',
+    Upper_Jaw_Right: ['Tooth Inflammation'],
+    Upper_Jaw_Left: ['Swelling'],
+    Upper_Jaw_Front: ['Filling'],
+    Lower_Jaw_Right: ['Cleaning'],
+    Lower_Jaw_Left: ['Bad Breadth'],
+    Lower_Jaw_Front: ['Braces'],
+  },
+  {
+    Specialization: 'Gynaecologist',
+    Skin: ['Pimples'],
+    Hormonal: ['Bloating'],
+    Periods: ['Irregular periods'],
+    Conceive: ['Missed Periods'],
+    Breast: ['Lump'],
+    Other: ['PCOD'],
+  },
+  {
+    Specialization: 'Cardiologist',
+    Body_pain: ['Pain in upper abdomen'],
+    Respiratory_system: ['Shortness of Breadth'],
+    Chest: ['Chest tightness'],
+  },
+  {
+    Specialization: 'Dermatologist',
+    Face: ['Pimples'],
+    Neck: ['Red Neck'],
+    Hands: ['Dry Skin'],
+    Legs: ['Infection'],
+    Back: ['Fungal Infection'],
+    Other: [],
+  },
+  {
+    Specialization: 'Orthopaedic',
+    Hands: ['Swelling'],
+    Legs: ['Bleeding'],
+    Ribs: ['Fracture'],
+    Pelvic_bone: ['Displacement'],
+    Joints: ['Joint Pain'],
+  },
+];
+
+export default PatientData;
