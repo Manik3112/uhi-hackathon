@@ -14,11 +14,21 @@ export class AppointmentController {
   }
 
   addAppointment = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
-    const response = await this.members.appointmentService.addAppointment(req.body);
-    return res.status(response.status).json(response.data);
+    try{
+      const response = await this.members.appointmentService.addAppointment(req.body);
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
   };
   getAppointment = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
-    const response = await this.members.appointmentService.getAppointment(req.params as {appointmentId: string});
-    return res.status(response.status).json(response.data);
+    try{
+      const response = await this.members.appointmentService.getAppointment(req.params as {appointmentId: string});
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
   };
 }

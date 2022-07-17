@@ -15,15 +15,30 @@ export class EmrController {
   }
 
   addEmrPatient = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
-    const response = await this.members.emrService.addEmrPatient(req.body);
-    return res.status(response.status).json(response.data);
+    try{
+      const response = await this.members.emrService.addEmrPatient(req.body);
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
   };
   updateEmrReceptionist = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
-    const response = await this.members.emrService.updateEmrReceptionist(req.body);
-    return res.status(response.status).json(response.data);
+    try{
+      const response = await this.members.emrService.updateEmrReceptionist(req.body);
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
   };
   updateEmrDoctor = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
-    const response = await this.members.emrService.updateEmrDoctor(req.body);
-    return res.status(response.status).json(response.data);
+    try{
+      const response = await this.members.emrService.updateEmrDoctor(req.body);
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
   };
 }
