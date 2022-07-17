@@ -59,10 +59,10 @@ export class DocumentService {
 
     // const documentType = getDocumentType(textFromPdf);
     // const matchDateFromText = getDateFromPdf(textFromPdf);
-    const type = 'document'; //documentType
+    const type = 'record'; //documentType
     const documentDate = '2022-03-01 12:00:00';
     
-    if(type == 'document') {
+    if(false) {
       // const matchSymptomsFromText = getSymptomsFromPdf(textFromPdf);
       // const matchDiagnosisFromText = getDiagnosisFromPdf(textFromPdf);
       // const matchMedicationFromText = getMedicationFromPdf(textFromPdf);
@@ -136,13 +136,18 @@ export class DocumentService {
     const response = await this.model.getDocument(request.patientId)
     const report = [];
     for(let i = 0; i < response.length; i++){
-      const x = await this.reportModel.getReport(response[i].reportId);
-      if(x) report.push(x);
+      const singleReport = await this.reportModel.getReport(response[i].reportId);
+      if(singleReport) report.push({...singleReport, base64: response[i].base64});
     }
     return ResponseBuilder(200, report);
   }
   async getDocument(request: {patientId: string}) {
-    const response = await this.emrModel.getDocument(request.patientId)
-    return ResponseBuilder(200, response);
+    const response = await this.model.getDocument(request.patientId);
+    const emr = [];
+    for(let i = 0; i < response.length; i++){
+      const singleEmr = await this.emrModel.getEmr(response[i].emrId);
+      if(singleEmr) emr.push({...singleEmr, base64: response[i].base64});
+    }
+    return ResponseBuilder(200, emr);
   }
 }

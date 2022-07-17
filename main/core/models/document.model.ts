@@ -29,4 +29,16 @@ export class DocumentModel {
       patientId,
     }).toArray();
   }
+  async blobUrlsEmr(patientId: string) {
+    return this.dbClient.db.find({
+      patientId,
+      emrId: { $exists: 1 }
+    }, { projection: { _id: 0, base64: 1 }}).toArray();
+  }
+  async blobUrlsRecords(patientId: string) {
+    return this.dbClient.db.find({
+      patientId,
+      reportId: { $exists: 1 }
+    }, { projection: { _id: 0, base64: 1 }}).toArray();
+  }
 }
