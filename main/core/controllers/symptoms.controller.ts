@@ -19,23 +19,43 @@ export class SymptomsController {
   }
 
   getSuggestions = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
-    const response = await this.members.symptomsService.getSuggestions(req.body);
-    return res.status(response.status).json(response.data);
+    try{
+      const response = await this.members.symptomsService.getSuggestions(req.body);
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
   };
 
   getPatientSuggestions = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
-    const response = await this.members.symptomsService.getPatientSuggestions(req.body);
-    return res.status(response.status).json(response.data);
+    try{
+      const response = await this.members.symptomsService.getPatientSuggestions(req.body);
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
   };
 
   getDoctorCheckupDetails = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
-    const response = await this.members.symptomsService.getDoctorCheckupDetails(req.body);
-    return res.status(response.status).json(response.data);
+    try{
+      const response = await this.members.symptomsService.getDoctorCheckupDetails(req.body);
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
   };
 
   getDoctorSuggestions = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
-    const response = await this.members.symptomsService.getDoctorSuggestions(req.body);
-    return res.status(response.status).json(response.data);
+    try{
+      const response = await this.members.symptomsService.getDoctorSuggestions(req.body);
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
   };
 
 }
