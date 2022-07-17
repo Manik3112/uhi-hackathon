@@ -3,15 +3,23 @@ import { Configuration } from '../utils/configuration.utils';
 import { Logger } from '../utils/logger.utils';
 import { ExpressRequest, RestResponseType } from './../../frame/modules/express.module';
 import PatientData from '../utils/patientUtils/PatientsData';
+import { AppointmentModel } from '../models/appointment.model';
+import { EmrModel } from '../models/emr.model';
+import DoctorsData from '../utils/patientUtils/DoctorsData';
+import DoctorSuggestionsData from '../utils/patientUtils/DoctorSuggestionsData';
 
 export class SymptomsService {
   private snomedRestClient: RestClient;
   private configuration: Configuration;
+  private model: AppointmentModel;
+  private emrModel: EmrModel;
   private logger: Logger;
 
   constructor() {
     this.configuration = new Configuration();
     this.snomedRestClient = new RestClient(this.configuration.snomed);
+    this.model = new AppointmentModel();
+    this.emrModel = new EmrModel();
     this.logger = new Logger({priority: 'high'});
   }
 
@@ -68,6 +76,76 @@ export class SymptomsService {
     return this.returnWithSuccessStatusAndRecord(updatedPatientsRecord); 
 
   }
+
+  async getDoctorCheckupDetails(req: ExpressRequest | any): Promise<RestResponseType> {
+    const emrId = req.EmrId; 
+
+    const emrRecord = await this.emrModel.findOne(emrId);
+
+    if(!emrRecord)
+    return {
+      status: 400,
+      data: {
+        error: `No Records found for this EmrID : ${emrId}`
+      }
+    };
+
+    const existingSuggestions = emrRecord.symptoms;
+    const staticDoctorsData = DoctorsData;
+    let itr = 0;
+    let arr = new Array;
+
+    // Default Suggestions if no suggestions selected from Patient side
+    if(!existingSuggestions.length) {
+      const defaultSuggestion = {
+        Cough: {
+          Symptom: 'Cough',
+          Prominence_of_Symptoms: ['1 week', '2 week', 'More than 2 weeks'],
+          Pain_Located: [
+            'Dry Cough',
+            'Cough with discharge',
+            'Chest Cough',
+            'Post-Viral Cough',
+            'Whooping Cough',
+          ],
+          Acompained_Symptoms: [
+            'Fever',
+            'Sore Throat',
+            'Running/Blocked nose',
+            'Chest Pain',
+            'Breathlessness',
+          ],
+        },
+      };
+
+      return this.returnWithSuccessStatusAndRecord(defaultSuggestion);
+    }
+
+    for(let i=0;i<staticDoctorsData.length;i++) {
+      if(existingSuggestions.includes(staticDoctorsData[i].Symptom)) {
+          arr.push(staticDoctorsData[i]);
+      }
+  }
+  
+    const updatedDoctorsRecord = arr.reduce((obj, item) => ({
+      ...obj,
+      [item.Symptom[0]]: item
+    }), {});
+
+    return this.returnWithSuccessStatusAndRecord(updatedDoctorsRecord); 
+  }
+
+  async getDoctorSuggestions(req: ExpressRequest | any): Promise<RestResponseType> {
+    const staticDoctorsSuggestions = DoctorSuggestionsData;
+
+    const updatedSuggestionsRecord = staticDoctorsSuggestions.reduce((obj, item) => ({
+      ...obj,
+      [item.Symptom]: item
+    }), {});
+    
+    return this.returnWithSuccessStatusAndRecord(updatedSuggestionsRecord); 
+  }
+
 
   private returnWithSuccessStatusAndRecord(record : any): RestResponseType | PromiseLike<RestResponseType> {
     return {
