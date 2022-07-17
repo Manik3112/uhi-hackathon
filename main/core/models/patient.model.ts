@@ -19,6 +19,7 @@ export class PatientModel {
     },{
       $setOnInsert : {
         patientId,
+        abhaAddress: request.abhaAddress,
         gender: request.gender,
         age: request.age,
         documents: [],
@@ -34,6 +35,11 @@ export class PatientModel {
   async fetchPatient(patientId: string) {
     return await this.dbClient.db.findOne({
       patientId,
+    }, {projection: { _id: 0 }});
+  }
+  async fetchPatientFromAbha(abhaAddress: string) {
+    return await this.dbClient.db.findOne({
+      abhaAddress,
     }, {projection: { _id: 0 }});
   }
 }

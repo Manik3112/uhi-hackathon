@@ -14,6 +14,7 @@ export class ReportModel {
     await this.dbClient.db.insertOne({
       reportId,
       patientId: request.patientId,
+      report: request.report,
       createdAt: this.commonUtil.getCurrentDate(),
       updatedAt: this.commonUtil.getCurrentDate(),
     });

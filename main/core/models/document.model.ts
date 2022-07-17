@@ -24,4 +24,9 @@ export class DocumentModel {
     });
     return documentId;
   }
+  async getDocument(patientId: string) {
+    return this.dbClient.db.find({
+      patientId,
+    }).toArray();
+  }
 }

@@ -8,6 +8,9 @@ export class DocumentController {
     const router = ExpressRouter();
 
     router.post('/add', this.addDocument);
+    router.post('/dataPush', this.dataPush);
+    router.get('/report', this.getReport);
+    router.get('/medical', this.getMedical);
 
     return router;
   }
@@ -21,4 +24,33 @@ export class DocumentController {
       return res.status(500).json({error: e.message});
     }
   };
+  getReport = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
+    try{
+      const response = await this.members.documentService.getReport(req.params as {patientId: string});
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
+  };
+  getMedical = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
+    try{
+      const response = await this.members.documentService.getDocument(req.params as {patientId: string});
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
+  };
+  dataPush = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
+    try{
+      const response = await this.members.documentService.dataPush(req.body);
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
+  };
+
+
 }

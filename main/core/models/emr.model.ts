@@ -19,6 +19,7 @@ export class EmrModel {
       medication: [],
       investigation: [],
       advice: [],
+      status: 'new',
       patientId: request.patientId,
       type: request.type,
       createdAt: this.commonUtil.getCurrentDate(),
@@ -30,6 +31,12 @@ export class EmrModel {
     return this.dbClient.db.findOne({
       emrId,
     }, {projection: { _id: 0 }});
+  }
+  async getDocument(patientId: string) {
+    return this.dbClient.db.find({
+      patientId,
+      type: 'document'
+    }, {projection: { _id: 0 }}).toArray();
   }
   async addEmrPatient(emrId: string, symptoms: string[]) {
     return this.dbClient.db.updateOne({
@@ -53,6 +60,7 @@ export class EmrModel {
         medication: request.medication,
         investigation: request.investigation,
         advice: request.advice,
+        status: 'com',
       }
     });
   }

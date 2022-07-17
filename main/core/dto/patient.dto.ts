@@ -3,6 +3,7 @@ export type PatientDto = {
   lastName: string,
   phoneNumber: string,
   age: string,
+  abhaAddress: string,
   gender: string,
   documents: string[],
   medicalHistory: string[],
