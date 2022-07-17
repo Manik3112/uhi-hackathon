@@ -24,7 +24,7 @@ export class DocumentService {
 
   async addDocument(request: any): Promise<RestResponseType> {
     // Parse Document to Structured Format
-    const parsedDocument = this.parseDocument(request.base64);
+    const parsedDocument = await this.parseDocument(request.base64);
     request.type = parsedDocument.type;
     request.documentDate = parsedDocument.documentDate;
     if(request.type == 'document') {
@@ -45,25 +45,34 @@ export class DocumentService {
         patientId: request.patientId,
         documentDate: request.documentDate,
         report: parsedDocument.report,
-        base64: parsedDocument.base64,
       });
     }
     const response = await this.model.insertDocument(request);
     return ResponseBuilder(200, {response});
   }
   // Mocking THIS API
-  private parseDocument(base64: string): any {
-    // This Function Will take base64 and convert it into prescription or record on the basis of type matching the closest words.
-    const type = 'document';
-    let prescription, record;
+  private async parseDocument(base64: string): Promise<any> {
+    /*
+    * This Function Will take base64 and convert it into prescription or record on the basis of type matching the closest words.
+    */
+   // const textFromPdf = await extractTextFromBase64(base64);
+
+    // const documentType = getDocumentType(textFromPdf);
+    // const matchDateFromText = getDateFromPdf(textFromPdf);
+    const type = 'document'; //documentType
+    const documentDate = '2022-03-01 12:00:00';
+    
     if(type == 'document') {
-      prescription = {
-        type:'document',
-        documentDate: '2022-03-01 12:00:00',
-        symptoms: ['fever'],
+      // const matchSymptomsFromText = getSymptomsFromPdf(textFromPdf);
+      // const matchDiagnosisFromText = getDiagnosisFromPdf(textFromPdf);
+      // const matchMedicationFromText = getMedicationFromPdf(textFromPdf);
+      const prescription = {
+        type,
+        documentDate, //matchDateFromText
+        symptoms: ['fever'], //matchSymptomsFromText
         symptomsDetails: {},
-        provisionalDiagnosis: ['Fever'],
-        medication: ['Dolo 1-0-1'],
+        provisionalDiagnosis: ['Fever'], //matchDiagnosisFromText
+        medication: ['Dolo 1-0-1'], //matchMedicationFromText
         investigation: [],
         advice: [],
         reportData: {},
@@ -71,13 +80,14 @@ export class DocumentService {
       return prescription;
     }
     else if(type == 'record') {
-      record = {
-        type: 'record',
-        documentDate: '2022-03-01 12:00:00',
+      // const matchReportsFromText = getReprtFromPdf(textFromPdf);
+      const record = {
+        type,
+        documentDate, //matchDateFromText
         report: {
           bp: '123',
           b12: '100',
-        },
+        }, // Record Name and Value Pair
         base64: base64
       }
       return record;
