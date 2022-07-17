@@ -10,6 +10,8 @@ import { AppointmentService } from './core/services/appointment.service';
 import { AppointmentController } from './core/controllers/appointment.controller';
 import { EmrController } from './core/controllers/emr.controller';
 import { EmrService } from './core/services/emr.service';
+import { DocumentService } from './core/services/document.service';
+import { DocumentController } from './core/controllers/document.controller';
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
@@ -23,11 +25,13 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
   const symptomsService = new SymptomsService();
   const appointmentService = new AppointmentService();
   const emrService = new EmrService();
+  const documentService = new DocumentService();
 
   // Initializing Controllers
   const symptomsController = new SymptomsController({symptomsService});
   const appointmentController = new AppointmentController({appointmentService});
   const emrController = new EmrController({emrService});
+  const documentController = new DocumentController({documentService});
 
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(cors());
@@ -36,6 +40,7 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
   app.use('/symptoms', symptomsController.routes());
   app.use('/appointment', appointmentController.routes());
   app.use('/emr', emrController.routes());
+  app.use('/document', documentController.routes());
   
   app.use((req, res) => {
     res.status(404).json({ error: `Cannot ${req.method} ${req.url}` });

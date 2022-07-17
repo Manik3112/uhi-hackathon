@@ -34,4 +34,9 @@ export class AppointmentModel {
       appointmentId,
     }, {projection: { _id: 0 }});
   }
+  async listAppointment(date: string): Promise<AppointmentDto[]> {
+    return this.dbClient.db.find({
+      createdAt: {$lte: this.commonUtil.getDateObject(`${date} 23:59:59`), $gte: this.commonUtil.getDateObject(`${date} 00:00:00`)},
+    }, {projection: { _id: 0 }}).toArray();
+  }
 }

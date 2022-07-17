@@ -9,10 +9,10 @@ export class CommonUtil {
   getuuidv4(): string {
     return uuidv4();
   }
-  getCurrentDate(): string {
-    return moment().format();
+  getCurrentDate(): Date {
+    return new Date();
   }
-  getDateObject(date: string | Date): string {
-    return moment(date).format();
+  getDateObject(date: string | Date): Date {
+    return moment(date).toDate();
   }
 }

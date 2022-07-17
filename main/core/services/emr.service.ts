@@ -1,9 +1,6 @@
 import { ResponseBuilder } from './../../frame/modules/axios.module';
 import { RestResponseType } from './../../frame/modules/express.module';
-import { AppointmentModel } from '../models/appointment.model';
-import { PatientModel } from '../models/patient.model';
 import { EmrModel } from '../models/emr.model';
-import { DoctorModel } from '../models/doctor.model';
 import { EmrDto } from '../dto/emr.dto';
 
 export class EmrService {

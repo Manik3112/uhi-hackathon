@@ -8,6 +8,9 @@ export class AppointmentController {
     const router = ExpressRouter();
 
     router.post('/add', this.addAppointment);
+    router.get('/list', this.listAppointment);
+    
+    // Put it in the Last
     router.get('/:appointmentId', this.getAppointment);
 
     return router;
@@ -25,6 +28,15 @@ export class AppointmentController {
   getAppointment = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
     try{
       const response = await this.members.appointmentService.getAppointment(req.params as {appointmentId: string});
+      return res.status(response.status).json(response.data);
+    }
+    catch(e: any) {
+      return res.status(500).json({error: e.message});
+    }
+  };
+  listAppointment = async (req: ExpressRequest, res: ExpressResponse): Promise<ExpressResponse> => {
+    try{
+      const response = await this.members.appointmentService.listAppointment(req.query as {date: string});
       return res.status(response.status).json(response.data);
     }
     catch(e: any) {

@@ -44,4 +44,11 @@ export class AppointmentService {
     const emr = await this.emrModel.getEmr(appointment.emrId);
     return ResponseBuilder(200, {...appointment, emr});
   }
+  async listAppointment(request: {date: string}): Promise<RestResponseType> {
+    const appointment = await this.model.listAppointment(request.date);
+    for(let i=0; i < appointment.length; i++ ) {
+      appointment[i].patient = await this.patientModel.fetchPatient(appointment[i].patientId)
+    }
+    return ResponseBuilder(200, appointment);
+  }
 }
