@@ -22,4 +22,9 @@ export class ReportModel {
     });
     return reportId;
   }
+  async getReport(reportId: string) {
+    return this.dbClient.db.findOne({
+      reportId,
+    });
+  }
 }

@@ -124,7 +124,12 @@ export class DocumentService {
   }
   async getReport(request: {patientId: string}) {
     const response = await this.model.getDocument(request.patientId)
-    return ResponseBuilder(200, response);
+    const report = [];
+    for(let i = 0; i < response.length; i++){
+      const x = await this.reportModel.getReport(response[i].reportId);
+      if(x) report.push(x);
+    }
+    return ResponseBuilder(200, report);
   }
   async getDocument(request: {patientId: string}) {
     const response = await this.emrModel.getDocument(request.patientId)
