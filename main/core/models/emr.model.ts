@@ -10,7 +10,7 @@ export class EmrModel {
     this.commonUtil = new CommonUtil();
   }
 
-  async createBlankEmr(request: {type: string, patientId: string}) {
+  async createBlankEmr(request: {type: string, patientId: string, documentDate?: string}) {
     const emrId = this.commonUtil.getuuidv4();
     await this.dbClient.db.insertOne({
       emrId,
@@ -22,6 +22,7 @@ export class EmrModel {
       status: 'new',
       patientId: request.patientId,
       type: request.type,
+      documentDate: request.documentDate ? this.commonUtil.getDateObject(request.documentDate) : null,
       createdAt: this.commonUtil.getCurrentDate(),
       updatedAt: this.commonUtil.getCurrentDate(),
     })

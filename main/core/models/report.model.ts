@@ -15,6 +15,7 @@ export class ReportModel {
       reportId,
       patientId: request.patientId,
       report: request.report,
+      documentDate: this.commonUtil.getDateObject(request.documentDate),
       createdAt: this.commonUtil.getCurrentDate(),
       updatedAt: this.commonUtil.getCurrentDate(),
     });

@@ -1,6 +1,7 @@
 import { PatientDto } from "./patient.dto";
 
 export type AppointmentDto = {
+  status: any;
   appointmentId?: string,
   doctorId: string,
   patientId: string,

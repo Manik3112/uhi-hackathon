@@ -28,7 +28,7 @@ export class DocumentService {
     request.type = parsedDocument.type;
     request.documentDate = parsedDocument.documentDate;
     if(request.type == 'document') {
-      request.emrId = await this.emrModel.createBlankEmr({type: request.type, patientId: request.patientId});
+      request.emrId = await this.emrModel.createBlankEmr({type: request.type, patientId: request.patientId, documentDate: request.documentDate});
       this.emrModel.updateEmrDoctor(request.emrId, {
         symptoms: parsedDocument.symptoms,
         symptomsDetails: parsedDocument.symptomsDetails,
@@ -37,11 +37,13 @@ export class DocumentService {
         investigation: parsedDocument.investigation,
         advice: parsedDocument.advice,
         patientId: request.patientId,
+        documentDate: request.documentDate,
       } as unknown as EmrDto & {reportData: any})
     }
-    else if(request.type == 'report') {
+    else if(request.type == 'record') {
       request.reportId = await this.reportModel.insertReport({
         patientId: request.patientId,
+        documentDate: request.documentDate,
         report: parsedDocument.reportData,
       });
     }
@@ -67,7 +69,11 @@ export class DocumentService {
     }
     else if(type == 'record') {
       record = {
-
+        documentDate: '2022-03-01 12:00:00',
+        report: {
+          bp: '123',
+          b12: '100',
+        }
       }
     }
     return prescription || record;
