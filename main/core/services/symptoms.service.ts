@@ -97,8 +97,8 @@ export class SymptomsService {
 
     // Default Suggestions if no suggestions selected from Patient side
     if(!existingSuggestions.length) {
-      const defaultSuggestion = {
-        Cough: {
+      const defaultSuggestion = [
+        {
           Symptom: 'Cough',
           Prominence_of_Symptoms: ['1 week', '2 week', 'More than 2 weeks'],
           Pain_Located: [
@@ -116,7 +116,7 @@ export class SymptomsService {
             'Breathlessness',
           ],
         },
-      };
+      ];
 
       return this.returnWithSuccessStatusAndRecord(defaultSuggestion);
     }
@@ -132,7 +132,7 @@ export class SymptomsService {
       [item.Symptom[0]]: item
     }), {});
 
-    return this.returnWithSuccessStatusAndRecord(updatedDoctorsRecord); 
+    return this.returnWithSuccessStatusAndRecord(Object.values(updatedDoctorsRecord)); 
   }
 
   async getDoctorSuggestions(req: ExpressRequest | any): Promise<RestResponseType> {
