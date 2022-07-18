@@ -48,7 +48,10 @@ export class EmrModel {
   async updateEmrReceptionist(emrId: string, provisionalDiagnosis: string[]) {
     return this.dbClient.db.updateOne({
       emrId,
-    }, {$set: { provisionalDiagnosis }});
+    }, {$set: {
+      provisionalDiagnosis, 
+      status: 'act',
+    }});
   }
   async updateEmrDoctor(emrId: string, request: EmrDto) {
     return this.dbClient.db.updateOne({

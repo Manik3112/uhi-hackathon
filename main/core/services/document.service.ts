@@ -52,20 +52,17 @@ export class DocumentService {
   }
   // Mocking THIS API
   private async parseDocument(base64: string): Promise<any> {
-    /*
-    * This Function Will take base64 and convert it into prescription or record on the basis of type matching the closest words.
-    */
-   // const textFromPdf = await extractTextFromBase64(base64);
+   // const textFromPdf = await extractTextFromBase64(base64); //Function Explaination in README.md file
 
-    // const documentType = getDocumentType(textFromPdf);
-    // const matchDateFromText = getDateFromPdf(textFromPdf);
+    // const documentType = getDocumentType(textFromPdf); //Function Explaination in README.md file
+    // const matchDateFromText = getDateFromPdf(textFromPdf); //Function Explaination in README.md file
     const type = 'record'; //documentType
     const documentDate = '2022-03-01 12:00:00';
     
     if(false) {
-      // const matchSymptomsFromText = getSymptomsFromPdf(textFromPdf);
-      // const matchDiagnosisFromText = getDiagnosisFromPdf(textFromPdf);
-      // const matchMedicationFromText = getMedicationFromPdf(textFromPdf);
+      // const matchSymptomsFromText = getSymptomsFromPdf(textFromPdf); //Function Explaination in README.md file
+      // const matchDiagnosisFromText = getDiagnosisFromPdf(textFromPdf); //Function Explaination in README.md file
+      // const matchMedicationFromText = getMedicationFromPdf(textFromPdf); //Function Explaination in README.md file
       const prescription = {
         type,
         documentDate, //matchDateFromText
@@ -85,8 +82,26 @@ export class DocumentService {
         type,
         documentDate, //matchDateFromText
         report: {
-          bp: '123',
-          b12: '100',
+          "BLOOD PRESSURE": {
+            lowRange: "100",
+            highRange: "130",
+            value: "123"
+          },
+          "B12": {
+            lowRange: "100",
+            highRange: "130",
+            value: "123"
+          },
+          "HEMOGLOBIN": {
+            lowRange: "7",
+            highRange: "12",
+            value: "11"
+          },
+          "PLATELET COUNT": {
+            lowRange: "200000",
+            highRange: "400000",
+            value: "320000"
+          }
         }, // Record Name and Value Pair
         base64: base64
       }
