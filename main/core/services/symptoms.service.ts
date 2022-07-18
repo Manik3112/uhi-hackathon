@@ -99,22 +99,10 @@ export class SymptomsService {
     if(!existingSuggestions.length) {
       const defaultSuggestion = [
         {
-          Symptom: 'Cough',
-          Prominence_of_Symptoms: ['1 week', '2 week', 'More than 2 weeks'],
-          Pain_Located: [
-            'Dry Cough',
-            'Cough with discharge',
-            'Chest Cough',
-            'Post-Viral Cough',
-            'Whooping Cough',
-          ],
-          Acompained_Symptoms: [
-            'Fever',
-            'Sore Throat',
-            'Running/Blocked nose',
-            'Chest Pain',
-            'Breathlessness',
-          ],
+          Symptom: 'Headache',
+          Prominence_of_Symptoms: ['Headache', 'Muscle aches', 'Loss of appetite', 'Chills and shivering', 'Dehydration'],
+          Pain_Located: ['Osteoporosis', 'Metabolic bone diseases', 'Fracture', 'Stress fracture', 'Bone cancer'],
+          Acompained_Symptoms: ['Abdominal pain and cramps', 'Excess gas', 'Bloating', 'Stomach Pain', 'Diarrhea'],
         },
       ];
 
@@ -126,6 +114,8 @@ export class SymptomsService {
           arr.push(staticDoctorsData[i]);
       }
   }
+
+  this.isCheckArrayNotEmpty(arr);
   
     const updatedDoctorsRecord = arr.reduce((obj, item) => ({
       ...obj,
@@ -133,6 +123,17 @@ export class SymptomsService {
     }), {});
 
     return this.returnWithSuccessStatusAndRecord(Object.values(updatedDoctorsRecord)); 
+  }
+
+  private isCheckArrayNotEmpty(arr: any[]) {
+    if (!arr.length) {
+      arr.push({
+        Symptom: 'Headache',
+        Prominence_of_Symptoms: ['Headache', 'Muscle aches', 'Loss of appetite', 'Chills and shivering', 'Dehydration'],
+        Pain_Located: ['Osteoporosis', 'Metabolic bone diseases', 'Fracture', 'Stress fracture', 'Bone cancer'],
+        Acompained_Symptoms: ['Abdominal pain and cramps', 'Excess gas', 'Bloating', 'Stomach Pain', 'Diarrhea'],
+      });
+    }
   }
 
   async getDoctorSuggestions(req: ExpressRequest | any): Promise<RestResponseType> {
