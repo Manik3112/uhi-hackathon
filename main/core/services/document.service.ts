@@ -152,7 +152,10 @@ export class DocumentService {
     const report = [];
     for(let i = 0; i < response.length; i++){
       const singleReport = await this.reportModel.getReport(response[i].reportId);
-      if(singleReport) report.push({...singleReport, base64: response[i].base64});
+      if(singleReport) {
+        singleReport.report.documentDate = singleReport.documentDate;
+        report.push({...singleReport, base64: response[i].base64});
+      } 
     }
     return ResponseBuilder(200, report);
   }
